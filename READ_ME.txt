@@ -1,0 +1,2 @@
+I have sorted these projects into folders according to the day on my python journey.
+Mostly all the explanation for my codes is added as comments for now, would plan to make a proper READ_ME file for all my projects later.

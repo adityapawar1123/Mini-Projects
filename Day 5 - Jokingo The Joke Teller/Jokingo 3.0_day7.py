@@ -161,6 +161,8 @@ def get_joke_any(category=category_chosen):
 #So if the API works normally and a "joke" key exists, it'll get you a joke but if the API doesnt workk normally and 
 #fails to fetch the "joke" key or the "joke" key aint available then it'll print the "Oops! Couldn't fetch a joke this time."
 #key which will give u an error msg instead of crashing the program
+
+#check out learning.py for a better explanation with example
         elif joke.get("type") == "twopart":
             return f"{joke.get('setup', 'Oops! Something went wrong.😬')}\n{joke.get('delivery', '')}"
         else:
@@ -270,8 +272,9 @@ while True :
     print("\nThat was Jokingo 3.0 for you, hope you had fun\nRun again for more jokes(and roasts) :)")
     break 
 
-  elif joke_loop_input.strip().lower() not in ["yes", "yess", "yeah", "yeahh", "yos", "yoss", "yessir", "yessirr", "hell yeah", "hell yeahh", "ya", "yh", "yaa", "yup", "yupp", "ok", "okay", "okayy", "okie", "okies"] :
-    exit_roasts = [f"Okay whatever {name} you lame ass🙄", 
+  elif joke_loop_input.strip().lower() not in ["ofc", "ofcc", "ofcourse", "why not", "why not?", "ofccc", "obv", "obviously", "absolutely", "yess mf", "yes mf", "yesss mf", "yes", "yess", "yesss", "yeah", "yeahh", "yeahhh", "yos", "yoss", "yosss", "yessirrr", "yessir", "yessirr", "hell yeah", "hell yeahh", "ya", "yh", "yaa", "yup", "yupp", "ok", "okay", "okayy", "okayyy", "okiess", "okiesss", "okie", "okies"] :
+    exit_roasts = [
+                   f"Okay whatever {name} you lame ass🙄", 
                    f"Fine, whatever {name}, go be boring somewhere else.",
                    f"Alright, party pooper {name}, go touch grass or something.",
                    f"Damn {name}, who hurt you?",
@@ -286,7 +289,8 @@ while True :
                    f"No jokes? No problem. I'll just cry in binary. 😢 01000011 01110010 01111001",
                    f"Aight {name}, go be a disappointment somewhere else.",
                    f"Wow {name}, rejecting jokes? That's crazy. Couldn't be me.",
-                   f"Fine. I'll just entertain myself like I always do. Ohh the sadness never fades 💔. Nah just kidding, fuck off i don't care"]
+                   f"Fine. I'll just entertain myself like I always do. Ohh the sadness never fades 💔. Nah just kidding, fuck off i don't care"
+                   ]
     exit_roasts_random = random.choice(exit_roasts)
     engine.say(exit_roasts_random)
     print(exit_roasts_random)
@@ -298,7 +302,7 @@ while True :
    engine.say("You wanna continue with the same category of jokes right?")
    engine.runAndWait()
    q4_switch_category = input(("Do you want to continue with the same category of jokes?(yes/no): "))
-   if q4_switch_category.strip().lower() not in ["yes", "yess", "yeah", "yeahh", "yos", "yoss", "yessir", "yessirr", "hell yeah", "hell yeahh", "ya", "yh", "yaa", "yup", "yupp", "ok", "okay", "okayy", "okie", "okies"] :
+   if q4_switch_category.strip().lower() not in ["ofc", "ofcc", "ofcourse", "why not", "why not?", "ofccc", "obv", "obviously", "absolutely", "yess mf", "yes mf", "yesss mf", "yes", "yess", "yesss", "yeah", "yeahh", "yeahhh", "yos", "yoss", "yosss", "yessirrr", "yessir", "yessirr", "hell yeah", "hell yeahh", "ya", "yh", "yaa", "yup", "yupp", "ok", "okay", "okayy", "okayyy", "okiess", "okiesss", "okie", "okies"] :
      engine.say("Select a category") 
      print("Available categories are:\n\t1. Programming\n\t2. Miscellaneous\n\t3. Dark\n\t4. Pun(dad jokes)\n\t5. Spooky\n\t6. Christmas\n\t7. Any(includes all categories)")
      engine.runAndWait()

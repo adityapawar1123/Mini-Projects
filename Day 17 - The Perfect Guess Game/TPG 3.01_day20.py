@@ -128,25 +128,22 @@ while True :
 
  guessNo= 0
 
- def easy_highscore() : 
-     with open("highscore/normal_mode/easy_highscore.txt") as f : 
-         highscore = f.read().strip()
-
-         if highscore!="" : 
-             highscore = int(highscore)
-         else :
-             highscore = 100
+ def normal_mode_highscore() : 
+     global guessNo
+     global difficulty 
+     #This tells python that we directly wanna change the global variable named difficulty 
+     #and we're not creating a functn variable, this is wht global functn does
      
-         if guessNo>highscore : 
-             print(f"Highscore guess number : {highscore}")
-         else : 
-          with open("highscore/normal_mode/easy_highscore.txt", "w") as f1 : 
-             f1.write(str(guessNo))
-             tts("\nNew highscore unlocked!")
-             print(f"Highscore guess number : {guessNo}")
+     if difficulty in ["e", "ez", "easy"] : 
+         difficulty = "easy"
+     
+     elif difficulty in ["mid", "m", "medium", "normal"] : 
+         difficulty = "medium"
 
- def medium_highscore() : 
-     with open("highscore/normal_mode/medium_highscore.txt") as f : 
+     elif difficulty in ["h", "hard", "difficult", "diff", "dif"] : 
+         difficulty = "hard"
+
+     with open(f"highscore/normal_mode/{difficulty}_highscore.txt") as f : 
          highscore = f.read().strip()
 
          if highscore!="" : 
@@ -157,29 +154,10 @@ while True :
          if guessNo>highscore : 
              print(f"Highscore guess number : {highscore}")
          else : 
-          with open("highscore/normal_mode/medium_highscore.txt", "w") as f1 : 
-             f1.write(str(guessNo))
-             tts("\nNew highscore unlocked!")
-             print(f"Highscore guess number : {guessNo}")
-
- def hard_highscore() : 
-     with open("highscore/normal_mode/hard_highscore.txt") as f : 
-         highscore = f.read().strip()
-
-         if highscore!="" : 
-             highscore = int(highscore)
-         else :
-             highscore = 100
-      
-         if guessNo>highscore : 
-             print(f"Highscore guess number : {highscore}")
-         else : 
-          with open("highscore/normal_mode/hard_highscore.txt", "w") as f1 :
-             f1.write(str(guessNo))
-             tts("\nNew highscore unlocked!")
-             print(f"Highscore guess number : {guessNo}")
-
-
+            with open(f"highscore/normal_mode/{difficulty}_highscore.txt", "w") as f1 :
+                f1.write(str(guessNo))
+                tts("\nNew highscore unlocked!")
+                print(f"Highscore guess number : {guessNo}")
 
 
  def game_win_prompts() :
@@ -211,7 +189,7 @@ while True :
             if  easyNo==n : 
                 guessNo += 1
                 game_win_prompts()
-                easy_highscore()
+                normal_mode_highscore()
                 break     
                 
             elif n<easyNo : 
@@ -248,7 +226,7 @@ while True :
             if  mediumNo==n : 
                 guessNo += 1
                 game_win_prompts()
-                medium_highscore()
+                normal_mode_highscore()
                 break
                 
             elif n<mediumNo : 
@@ -284,7 +262,7 @@ while True :
             if  hardNo==n : 
                 guessNo += 1
                 game_win_prompts()
-                hard_highscore()
+                normal_mode_highscore()
                 break
                 
             elif n<hardNo : 

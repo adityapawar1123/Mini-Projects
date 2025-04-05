@@ -128,25 +128,22 @@ while True :
 
  guessNo= 0
 
- def easy_highscore() : 
-     with open("highscore/normal_mode/easy_highscore.txt") as f : 
-         highscore = f.read().strip()
-
-         if highscore!="" : 
-             highscore = int(highscore)
-         else :
-             highscore = 100
+ def normal_mode_highscore() : 
+     global guessNo
+     global difficulty 
+     #This tells python that we directly wanna change the global variable named difficulty 
+     #and we're not creating a functn variable, this is wht global functn does
      
-         if guessNo>highscore : 
-             print(f"Highscore guess number : {highscore}")
-         else : 
-          with open("highscore/normal_mode/easy_highscore.txt", "w") as f1 : 
-             f1.write(str(guessNo))
-             tts("\nNew highscore unlocked!")
-             print(f"Highscore guess number : {guessNo}")
+     if difficulty in ["e", "ez", "easy"] : 
+         difficulty = "easy"
+     
+     elif difficulty in ["mid", "m", "medium", "normal"] : 
+         difficulty = "medium"
 
- def medium_highscore() : 
-     with open("highscore/normal_mode/medium_highscore.txt") as f : 
+     elif difficulty in ["h", "hard", "difficult", "diff", "dif"] : 
+         difficulty = "hard"
+
+     with open(f"highscore/normal_mode/{difficulty}_highscore.txt") as f : 
          highscore = f.read().strip()
 
          if highscore!="" : 
@@ -157,32 +154,14 @@ while True :
          if guessNo>highscore : 
              print(f"Highscore guess number : {highscore}")
          else : 
-          with open("highscore/normal_mode/medium_highscore.txt", "w") as f1 : 
-             f1.write(str(guessNo))
-             tts("\nNew highscore unlocked!")
-             print(f"Highscore guess number : {guessNo}")
-
- def hard_highscore() : 
-     with open("highscore/normal_mode/hard_highscore.txt") as f : 
-         highscore = f.read().strip()
-
-         if highscore!="" : 
-             highscore = int(highscore)
-         else :
-             highscore = 100
-      
-         if guessNo>highscore : 
-             print(f"Highscore guess number : {highscore}")
-         else : 
-          with open("highscore/normal_mode/hard_highscore.txt", "w") as f1 :
-             f1.write(str(guessNo))
-             tts("\nNew highscore unlocked!")
-             print(f"Highscore guess number : {guessNo}")
+            with open(f"highscore/normal_mode/{difficulty}_highscore.txt", "w") as f1 :
+                f1.write(str(guessNo))
+                tts("\nNew highscore unlocked!")
+                print(f"Highscore guess number : {guessNo}")
 
 
-
-
- def game_win_prompts() :
+ def game_win_prompts(n) :
+    global guessNo
     if guessNo==1 : 
         print(f"\nYou won! The answer is {n}\nNumber of guesses = {guessNo}")
         only_tts(first_guess_prompts_random)
@@ -199,27 +178,36 @@ while True :
         print(f"\nYou won! The answer is {n}\nNumber of guesses = {guessNo}")
         only_tts(slow_guess_roasts_random)  
 
- if difficulty.lower().strip() in ["e", "easy", "ez"] : 
-    easyNo = random.randint(1, 100)
-    
-    tts("You have to guess a number between 1 and 100")
-    while True : 
+ def normal_mode_game(diffNo) : 
+     global easyNo
+     global mediumNo
+     global hardNo
+     global guessNo
+
+     if diffNo in ["e"] : 
+         diffNo = easyNo
+     elif diffNo in ["m"] : 
+         diffNo = mediumNo
+     elif diffNo in ["h"] : 
+         diffNo = hardNo
+     
+     while True : 
         n1 = input("Guess the number : ")
 
         if n1.isdigit() == True : 
             n = int(n1)
-            if  easyNo==n : 
+            if  diffNo==n : 
                 guessNo += 1
-                game_win_prompts()
-                easy_highscore()
+                game_win_prompts(n)
+                normal_mode_highscore()
                 break     
-                
-            elif n<easyNo : 
+                    
+            elif n<diffNo : 
                 only_tts("Guess a higher number")
                 print(f"\nWrong guess\nPick a higher number than {n}")
                 guessNo+=1
 
-            elif n>easyNo : 
+            elif n>diffNo : 
                 only_tts("Guess a lower number")
                 print(f"\nWrong guess\nPick a lower number than {n}")
                 guessNo+=1
@@ -227,6 +215,13 @@ while True :
         else : 
             only_tts(invalid_input_roasts_random)
             print("\nEnter an integer DUMBASS")
+     
+
+ if difficulty.lower().strip() in ["e", "easy", "ez"] : 
+    easyNo = random.randint(1, 100)
+    
+    tts("You have to guess a number between 1 and 100")
+    normal_mode_game("e")
 
     loop_question = input(("\nWanna play one more game?(yes/no) : "))
 
@@ -240,30 +235,7 @@ while True :
     mediumNo = random.randint(1, 500)
 
     tts("You have to guess a number between 1 and 500")
-    while True : 
-        n1 = input("Guess the number : ")
-
-        if n1.isdigit() == True : 
-            n = int(n1)
-            if  mediumNo==n : 
-                guessNo += 1
-                game_win_prompts()
-                medium_highscore()
-                break
-                
-            elif n<mediumNo : 
-                only_tts("Guess a higher number")
-                print(f"\nWrong guess\nPick a higher number than {n}")
-                guessNo+=1
-
-            elif n>mediumNo : 
-                only_tts("Guess a lower number")
-                print(f"\nWrong guess\nPick a lower number than {n}")
-                guessNo+=1
-
-        else : 
-            only_tts(invalid_input_roasts_random)
-            print("\nEnter an integer DUMBASS")
+    normal_mode_game("m")
 
     loop_question = input(("\nWanna play one more game?(yes/no) : "))
 
@@ -276,30 +248,7 @@ while True :
      hardNo = random.randint(1, 1000)
      
      tts("You have to guess a number between 1 and 1000")
-     while True : 
-        n1 = input("Guess the number : ")
-        
-        if n1.isdigit() == True : 
-            n = int(n1)
-            if  hardNo==n : 
-                guessNo += 1
-                game_win_prompts()
-                hard_highscore()
-                break
-                
-            elif n<hardNo : 
-                only_tts("Guess a higher number")
-                print(f"\nWrong guess\nPick a higher number than {n}")
-                guessNo+=1
-
-            elif n>hardNo : 
-                only_tts("Guess a lower number")
-                print(f"\nWrong guess\nPick a lower number than {n}")
-                guessNo+=1
-
-        else : 
-            only_tts(invalid_input_roasts_random)
-            print("\nEnter an integer DUMBASS")
+     normal_mode_game("h")
 
      loop_question = input(("\nWanna play one more game?(yes/no) : "))
 
